@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">P3T2_BudgetWatcher</string>
+    <string-array name="aggregation_periods">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
+</resources>
