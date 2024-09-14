@@ -40,16 +40,6 @@
 
     </LinearLayout>
 
-    <Spinner
-        android:id="@+id/aggregation_period_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:entries="@array/aggregation_periods"
-        app:layout_constraintTop_toBottomOf="@id/date_picker_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <Button
         android:id="@+id/aggregate_button"
         android:layout_width="match_parent"
@@ -57,7 +47,7 @@
         android:layout_marginTop="16dp"
         android:text="View Aggregations"
         android:background="@drawable/redbtn"
-        app:layout_constraintTop_toBottomOf="@id/aggregation_period_spinner"
+        app:layout_constraintTop_toBottomOf="@id/date_picker_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

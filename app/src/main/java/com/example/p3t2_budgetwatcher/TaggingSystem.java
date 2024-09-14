@@ -13,11 +13,44 @@ public class TaggingSystem {
     }
 
     private void initializeDefaultRules() {
-        addTagRule("(?i)groceries|supermarket|food", "food");
-        addTagRule("(?i)restaurant|cafe|coffee", "dining_out");
-        addTagRule("(?i)uber|taxi|transport", "transport");
-        addTagRule("(?i)deposit|salary", "income");
-        // Add more default rules as needed
+        // Food and Groceries
+        addTagRule("(?i)groceries|supermarket|food|spar|woolworths|pick n pay|checkers|steers", "food");
+        addTagRule("(?i)restaurant|cafe|coffee|steers|mcdonalds|kfc|nandos", "restaurant");
+        addTagRule("(?i)takeaway|delivery|uber eats|mr d|order in", "delivery");
+
+        // Transport
+        addTagRule("(?i)uber|taxi|transport|bus|train|flight|airline", "transport");
+        addTagRule("(?i)fuel|petrol|gas|engen|shell|caltex", "fuel");
+
+        // Shopping
+        addTagRule("(?i)clothing|fashion|woolworths|h&m|zara|cotton on", "clothing");
+        addTagRule("(?i)electronics|takealot|incredible connection|game", "electronics");
+        addTagRule("(?i)pharmacy|health|clicks|dis-chem", "health");
+
+        // Income
+        addTagRule("(?i)deposit|salary|wages|payment received", "income");
+        addTagRule("(?i)refund|cashback|reimbursement", "refund");
+
+        // Bills and Utilities
+        addTagRule("(?i)electricity|water|rates|municipality", "utilities");
+        addTagRule("(?i)rent|mortgage|bond payment", "housing");
+        addTagRule("(?i)insurance|medical aid|life cover", "insurance");
+
+        // Education
+        addTagRule("(?i)school fees|tuition|textbooks|stationery", "education");
+
+        // Entertainment
+        addTagRule("(?i)movies|cinema|theater|concert", "entertainment");
+        addTagRule("(?i)gym|fitness|sports", "fitness");
+
+        // Subscriptions
+        addTagRule("(?i)netflix|showmax|apple tv|spotify", "entertainment");
+        addTagRule("(?i)cell c|vodacom|mtn|telkom", "communication");
+
+        // General tags
+        addTagRule("(?i)purchase|buy|pay", "expense");
+        addTagRule("(?i)withdrawal|atm", "cash");
+        addTagRule("(?i)transfer|eft", "transfer");
     }
 
     public void addTagRule(String pattern, String tag) {

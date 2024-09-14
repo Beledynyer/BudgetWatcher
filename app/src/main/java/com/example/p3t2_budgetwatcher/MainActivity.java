@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
     private TransactionAdapter transactionAdapter;
     private AggregationAdapter aggregationAdapter;
     private DatePicker startDatePicker, endDatePicker;
-    private Spinner aggregationPeriodSpinner;
     private Button aggregateButton;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -50,16 +49,13 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
         aggregationList = findViewById(R.id.aggregation_list);
         startDatePicker = findViewById(R.id.start_date_picker);
         endDatePicker = findViewById(R.id.end_date_picker);
-        aggregationPeriodSpinner = findViewById(R.id.aggregation_period_spinner);
         aggregateButton = findViewById(R.id.aggregate_button);
 
         transactionAdapter = new TransactionAdapter(transactions);
         transactionList.setAdapter(transactionAdapter);
         transactionList.setLayoutManager(new LinearLayoutManager(this));
 
-
-        //noinspection Since15
-        aggregationAdapter = new AggregationAdapter(Map.of(), this);
+        aggregationAdapter = new AggregationAdapter(new ArrayList<>(), this);
         aggregationList.setAdapter(aggregationAdapter);
         aggregationList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -86,10 +82,9 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
     private void performAggregation() {
         LocalDate startDate = LocalDate.of(startDatePicker.getYear(), startDatePicker.getMonth() + 1, startDatePicker.getDayOfMonth());
         LocalDate endDate = LocalDate.of(endDatePicker.getYear(), endDatePicker.getMonth() + 1, endDatePicker.getDayOfMonth());
-        String period = aggregationPeriodSpinner.getSelectedItem().toString();
 
-        Map<String, Double> aggregations = aggregator.aggregateByPeriod(transactions, startDate, endDate, period);
-        aggregationAdapter.updateAggregations(aggregations,startDate,endDate);
+        Map<String, AggregationResult> aggregations = aggregator.aggregateByTags(transactions, startDate, endDate);
+        aggregationAdapter.updateAggregations(aggregations, startDate, endDate);
 
         // Show aggregation list and hide transaction list
         transactionList.setVisibility(View.GONE);
@@ -98,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onItemClick(String tag, LocalDate startDate, LocalDate endDate) {
-        List<Transaction> filteredTransactions = aggregator.getTransactionsForTag(transactions, startDate, endDate, tag);
+    public void onItemClick(String tags, LocalDate startDate, LocalDate endDate) {
+        List<Transaction> filteredTransactions = aggregator.getTransactionsForTags(transactions, startDate, endDate, tags);
         transactionAdapter.updateTransactions(filteredTransactions);
 
         // Show transaction list and hide aggregation list
