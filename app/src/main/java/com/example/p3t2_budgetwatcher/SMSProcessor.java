@@ -16,19 +16,14 @@ public class SMSProcessor {
 
     public SMSProcessor(Context context) {
         this.context = context;
-        initializeFinancialInstitutions();
         initializeMessagePatterns();
     }
 
-    private void initializeFinancialInstitutions() {
-        financialInstitutions = new ArrayList<>();
-        financialInstitutions.add("Absa");
-        financialInstitutions.add("Capitec");
-        financialInstitutions.add("FNB");
-    }
+    
 
     private void initializeMessagePatterns() {
         messagePatterns = new ArrayList<>();
+        //message from financial institution format
         messagePatterns.add(Pattern.compile("(\\w+): (\\w+\\d+), (\\w+(?:\\s+\\w+)?), (\\d{2}/\\d{2}/\\d{4}) .* - (.+?), R([\\-\\d.]+),\\s*Available R([\\d.]+)\\. Help \\d+; .* \\d+"));
     }
 
@@ -61,14 +56,12 @@ public class SMSProcessor {
             Matcher matcher = pattern.matcher(messageBody);
             if (matcher.find()) {
                 String institution = matcher.group(1);
-                if (financialInstitutions.contains(institution)) {
-                    String account = matcher.group(2);
-                    String type = matcher.group(3);
-                    String date = matcher.group(4);
-                    String description = matcher.group(5);
-                    double amount = Double.parseDouble(matcher.group(6));
-                    return new Transaction(institution, account, type, date, description, amount);
-                }
+                String account = matcher.group(2);
+                String type = matcher.group(3);
+                String date = matcher.group(4);
+                String description = matcher.group(5);
+                double amount = Double.parseDouble(matcher.group(6));
+                return new Transaction(institution, account, type, date, description, amount);
             }
         }
         return null;
