@@ -16,7 +16,7 @@ public class TaggingSystem {
         // Food and Groceries
         addTagRule("(?i)groceries|supermarket|food|spar|woolworths|pick n pay|checkers|steers", "food");
         addTagRule("(?i)restaurant|cafe|coffee|steers|mcdonalds|kfc|nandos", "restaurant");
-        addTagRule("(?i)takeaway|delivery|uber eats|mr d|order in", "delivery");
+        addTagRule("(?i)takeaway|delivery|uber eats|mr d|order in|takealot", "delivery");
 
         // Transport
         addTagRule("(?i)uber|taxi|transport|bus|train|flight|airline", "transport");
@@ -24,14 +24,14 @@ public class TaggingSystem {
 
         // Shopping
         addTagRule("(?i)clothing|fashion|woolworths|h&m|zara|cotton on", "clothing");
-        addTagRule("(?i)electronics|takealot|incredible connection|game", "electronics");
+        addTagRule("(?i)electronics|takealot|incredible connection|game|antivirus", "electronics");
         addTagRule("(?i)pharmacy|health|clicks|dis-chem", "health");
 
         // Income
         addTagRule("(?i)deposit|salary|wages|payment received", "income");
         addTagRule("(?i)refund|cashback|reimbursement", "refund");
 
-        // Bills and Utilities
+        // bills and Utilities
         addTagRule("(?i)electricity|water|rates|municipality", "utilities");
         addTagRule("(?i)rent|mortgage|bond payment", "housing");
         addTagRule("(?i)insurance|medical aid|life cover", "insurance");

@@ -22,15 +22,14 @@ public class SMSProcessor {
 
     private void initializeFinancialInstitutions() {
         financialInstitutions = new ArrayList<>();
-        financialInstitutions.add("ABSA");
-        financialInstitutions.add("WFS");
+        financialInstitutions.add("Absa");
         financialInstitutions.add("Capitec");
         financialInstitutions.add("FNB");
     }
 
     private void initializeMessagePatterns() {
         messagePatterns = new ArrayList<>();
-        messagePatterns.add(Pattern.compile("(\\w+):\\s*(\\w+),\\s*(\\w+),\\s*(\\d{2}/\\d{2}/\\d{2})\\s*(.+),\\s*R([\\d.,-]+)"));
+        messagePatterns.add(Pattern.compile("(\\w+): (\\w+\\d+), (\\w+(?:\\s+\\w+)?), (\\d{2}/\\d{2}/\\d{4}) .* - (.+?), R([\\-\\d.]+),\\s*Available R([\\d.]+)\\. Help \\d+; .* \\d+"));
     }
 
 
@@ -58,8 +57,6 @@ public class SMSProcessor {
 
     //uses regular expressions to extract relevant information.
     private Transaction extractTransaction(String messageBody) {
-
-        //If a message matches a financial institution and pattern, a Transaction object is created.
         for (Pattern pattern : messagePatterns) {
             Matcher matcher = pattern.matcher(messageBody);
             if (matcher.find()) {
@@ -69,7 +66,7 @@ public class SMSProcessor {
                     String type = matcher.group(3);
                     String date = matcher.group(4);
                     String description = matcher.group(5);
-                    double amount = Double.parseDouble(matcher.group(6).replace(",", ""));
+                    double amount = Double.parseDouble(matcher.group(6));
                     return new Transaction(institution, account, type, date, description, amount);
                 }
             }

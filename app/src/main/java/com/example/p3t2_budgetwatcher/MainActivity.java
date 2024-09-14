@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -72,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
             taggingSystem.tagTransaction(transaction);
         }
         transactionAdapter.updateTransactions(transactions);
-
-        // Show transaction list and hide aggregation list
         transactionList.setVisibility(View.VISIBLE);
         aggregationList.setVisibility(View.GONE);
     }
@@ -105,12 +102,14 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
 
     private void requestSmsPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+                //need permission
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_SMS},
                     SMS_PERMISSION_CODE);
         }
         else{
+            //permission already given
             processTransactions();
         }
     }
@@ -120,10 +119,8 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == SMS_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, process messages
                 processTransactions();
             } else {
-                // Permission denied, handle accordingly
                 Toast.makeText(this, "SMS permission denied", Toast.LENGTH_SHORT).show();
             }
         }

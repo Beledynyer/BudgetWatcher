@@ -46,13 +46,11 @@ public class Transaction {
         this.institution = institution;
         this.account = account;
         this.type = type;
-        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yy"));
+        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.description = description;
         this.amount = amount;
         this.tags = new HashSet<>();
     }
-
-    // Getters and setters
 
     public void addTag(String tag) {
         tags.add(tag.toLowerCase());

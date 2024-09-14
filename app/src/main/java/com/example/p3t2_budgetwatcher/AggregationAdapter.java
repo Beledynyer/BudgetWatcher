@@ -21,6 +21,7 @@ public class AggregationAdapter extends RecyclerView.Adapter<AggregationAdapter.
     private OnItemClickListener listener;
     private LocalDate startDate, endDate;
 
+    //using interface for onItemClick (best practice)
     public interface OnItemClickListener {
         void onItemClick(String tags, LocalDate startDate, LocalDate endDate);
     }

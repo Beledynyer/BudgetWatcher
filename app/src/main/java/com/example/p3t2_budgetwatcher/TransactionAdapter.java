@@ -1,5 +1,6 @@
 package com.example.p3t2_budgetwatcher;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return new ViewHolder(view);
     }
 
+    @SuppressLint("DefaultLocale")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
@@ -59,6 +61,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return transactions.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateTransactions(List<Transaction> newTransactions) {
         this.transactions = newTransactions;
         notifyDataSetChanged();
