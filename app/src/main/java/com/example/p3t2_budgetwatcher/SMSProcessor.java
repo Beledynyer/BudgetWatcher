@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 public class SMSProcessor {
     private Context context;
-    private List<String> financialInstitutions;
     private List<Pattern> messagePatterns;
 
     public SMSProcessor(Context context) {
@@ -19,7 +18,7 @@ public class SMSProcessor {
         initializeMessagePatterns();
     }
 
-    
+
 
     private void initializeMessagePatterns() {
         messagePatterns = new ArrayList<>();
