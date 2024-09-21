@@ -16,6 +16,11 @@ import java.util.List;
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
     private List<Transaction> transactions;
+    private OnTransactionClickListener listener;
+
+    public interface OnTransactionClickListener {
+        void onTransactionClick(Transaction transaction);
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView dateView;
@@ -32,8 +37,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
     }
 
-    public TransactionAdapter(List<Transaction> transactions) {
+    public TransactionAdapter(List<Transaction> transactions, OnTransactionClickListener listener) {
         this.transactions = transactions;
+        this.listener = listener;
     }
 
     @Override
@@ -54,6 +60,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         viewHolder.descriptionView.setText(transaction.getDescription());
         viewHolder.amountView.setText(String.format("R %.2f", transaction.getAmount()));
         viewHolder.tagsView.setText(String.join(", ", transaction.getTags()));
+
+        viewHolder.itemView.setOnClickListener(v -> listener.onTransactionClick(transaction));
     }
 
     @Override

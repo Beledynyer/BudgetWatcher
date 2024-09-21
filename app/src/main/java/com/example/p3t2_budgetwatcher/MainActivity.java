@@ -1,12 +1,15 @@
 package com.example.p3t2_budgetwatcher;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -21,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements AggregationAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AggregationAdapter.OnItemClickListener , TransactionAdapter.OnTransactionClickListener {
     private SMSProcessor smsProcessor;
     private TaggingSystem taggingSystem;
     private TransactionAggregator aggregator;
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
         endDatePicker = findViewById(R.id.end_date_picker);
         aggregateButton = findViewById(R.id.aggregate_button);
 
-        transactionAdapter = new TransactionAdapter(transactions);
+        transactionAdapter = new TransactionAdapter(transactions, this);
         transactionList.setAdapter(transactionAdapter);
         transactionList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -124,5 +127,39 @@ public class MainActivity extends AppCompatActivity implements AggregationAdapte
                 Toast.makeText(this, "SMS permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onTransactionClick(Transaction transaction) {
+        showAddTagDialog(transaction);
+    }
+
+    private void showAddTagDialog(final Transaction transaction) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add Tag");
+
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newTag = input.getText().toString().trim();
+                if (!newTag.isEmpty()) {
+                    transaction.addTag(newTag);
+                    taggingSystem.addTagRule(newTag, newTag); // Add the new tag as a rule
+                    transactionAdapter.notifyDataSetChanged();
+                    Toast.makeText(MainActivity.this, "Tag added successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
