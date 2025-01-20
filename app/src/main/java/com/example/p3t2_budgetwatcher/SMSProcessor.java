@@ -29,7 +29,7 @@ public class SMSProcessor {
 
     public List<Transaction> processMessages() {
         List<Transaction> transactions = new ArrayList<>();
-        Uri uri = Uri.parse("content://sms/");
+        Uri uri = Uri.parse("content://sms/inbox");
         String[] projection = new String[]{"body"};
 
         try (Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null)) {
